@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from datetime import datetime, timedelta
 from typing import Optional, List
+from sqlalchemy import text
 import uvicorn
 
 from ..utils.logger import DebugLogger
@@ -87,7 +88,7 @@ async def health_check():
     try:
         # Test database connection
         async with db.get_session() as session:
-            await session.execute("SELECT 1")
+            await session.execute(text("SELECT 1"))
 
         return {
             "status": "healthy",
